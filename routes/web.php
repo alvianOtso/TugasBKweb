@@ -4,13 +4,17 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\User\EventController as UserEventController;
 use App\Http\Controllers\Admin\TiketController;
 use App\Http\Controllers\Admin\HistoriesController;
 use App\Http\Controllers\User\HomeController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Event
+Route::get('/events/{event}', [UserEventController::class, 'show'])->name('events.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -24,7 +28,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('categories', CategoryController::class);
 
         // Event Management
-        Route::resource('events', EventController::class);
+        Route::resource('events', AdminEventController::class);
 
         // Tiket Management 
         Route::resource('tickets', TiketController::class);
